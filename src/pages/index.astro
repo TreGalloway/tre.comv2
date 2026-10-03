@@ -17,6 +17,7 @@ const featuredWork = allWork
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 export const prerender = true;
+---
 
 <Layout title="Home" description={SITE.description}>
   <section class="mx-auto max-w-5xl px-6 pt-24 pb-20 sm:pt-32">

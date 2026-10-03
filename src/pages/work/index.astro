@@ -6,6 +6,7 @@ import { getCollection } from 'astro:content';
 const works = await getCollection('work', ({ data }) => !data.draft);
 works.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 export const prerender = true;
+---
 
 <Layout title="Work" description="Selected projects">
   <section class="mx-auto max-w-5xl px-6 py-20">
