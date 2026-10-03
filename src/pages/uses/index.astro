@@ -1,0 +1,41 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const uses = await getCollection('uses');
+---
+
+<Layout title="Uses" description="Tools, apps, and gear I use">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <div class="mb-10">
+      <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">Uses</p>
+      <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        What I use
+      </h1>
+      <p class="mt-4 text-lg text-ink-soft">
+        A curated list of the tools and gear I rely on day to day.
+      </p>
+    </div>
+    {uses.length > 0 ? (
+      <div class="space-y-10">
+        {uses.map((entry) => (
+          <section>
+            <h2 class="mb-4 text-lg font-semibold text-ink">{entry.data.title}</h2>
+            <ul class="space-y-3">
+              {entry.data.items.map((item) => (
+                <li class="rounded-lg border border-line bg-surface/40 p-4">
+                  <h3 class="font-medium text-ink">{item.name}</h3>
+                  {item.description && (
+                    <p class="mt-1 text-sm text-ink-soft">{item.description}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    ) : (
+      <p class="text-sm text-ink-soft">Nothing here yet.</p>
+    )}
+  </section>
+</Layout>

@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  work: CollectionEntry<'work'>;
+}
+
+const { work } = Astro.props;
+const { title, summary, role, date, tags, url, repo, featured } = work.data;
+---
+
+<article class="group relative flex flex-col gap-3 rounded-xl border border-line bg-surface/40 p-6 transition-colors hover:border-ink/20 hover:bg-surface/60">
+  <div class="flex items-center justify-between text-xs text-ink-soft">
+    <span class="uppercase tracking-widest">{role}</span>
+    <time datetime={date.toISOString()}>
+      {date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+    </time>
+  </div>
+  <h3 class="text-lg font-semibold tracking-tight text-ink">
+    <a
+      href={url || `/work/${work.id}`}
+      class="after:absolute after:inset-0 after:block"
+    >
+      {title}
+      {featured && (
+        <span class="ml-2 text-xs font-normal text-accent">• Featured</span>
+      )}
+    </a>
+  </h3>
+  <p class="text-sm leading-relaxed text-ink-soft">{summary}</p>
+  <div class="flex flex-wrap gap-2">
+    {tags.map((tag) => (
+      <span class="rounded-full border border-line bg-paper/60 px-2 py-0.5 text-xs text-ink-soft">
+        {tag}
+      </span>
+    ))}
+  </div>
+</article>

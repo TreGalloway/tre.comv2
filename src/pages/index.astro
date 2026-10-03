@@ -1,0 +1,85 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import PostCard from '@/components/PostCard.astro';
+import WorkCard from '@/components/WorkCard.astro';
+import Button from '@/components/Button.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '@/site.config';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const allWork = await getCollection('work', ({ data }) => !data.draft);
+const featuredWork = allWork
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Layout title="Home" description={SITE.description}>
+  <section class="mx-auto max-w-5xl px-6 pt-24 pb-20 sm:pt-32">
+    <div class="max-w-2xl">
+      <p class="mb-4 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
+        {SITE.status}
+      </p>
+      <h1 class="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+        {SITE.tagline}
+      </h1>
+      <p class="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
+        {SITE.description}
+      </p>
+      <div class="mt-8 flex items-center gap-4">
+        <Button href="/work">View the work</Button>
+        <Button href="/contact" variant="ghost">Get in touch</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 pb-20">
+    <div class="mb-8 flex items-end justify-between">
+      <div>
+        <p class="mb-2 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
+          Writing
+        </p>
+        <h2 class="text-2xl font-semibold tracking-tight text-ink">
+          Recent posts
+        </h2>
+      </div>
+      <Button href="/blog" variant="ghost">View all</Button>
+    </div>
+    {recentPosts.length > 0 ? (
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {recentPosts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <p class="text-sm text-ink-soft">No posts yet.</p>
+    )}
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 pb-24">
+    <div class="mb-8 flex items-end justify-between">
+      <div>
+        <p class="mb-2 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
+          Selected work
+        </p>
+        <h2 class="text-2xl font-semibold tracking-tight text-ink">
+          Featured projects
+        </h2>
+      </div>
+      <Button href="/work" variant="ghost">View all</Button>
+    </div>
+    {featuredWork.length > 0 ? (
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {featuredWork.map((work) => (
+          <WorkCard work={work} />
+        ))}
+      </div>
+    ) : (
+      <p class="text-sm text-ink-soft">No featured work yet.</p>
+    )}
+  </section>
+</Layout>

@@ -1,0 +1,34 @@
+---
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = '' } = Astro.props;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" />
+<title>{title}</title>
+{description && <meta name="description" content={description} />}
+<meta name="generator" content={Astro.generator} />
+
+<script is:inline>
+  const themeFamily = localStorage.getItem('theme-family') || 'serendipity';
+  const themeMode = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', themeFamily);
+  document.documentElement.classList.toggle('dark', themeMode === 'dark');
+</script>
+
+<script>
+  document.addEventListener('astro:after-swap', () => {
+    const themeFamily = localStorage.getItem('theme-family') || 'serendipity';
+    const themeMode = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', themeFamily);
+    document.documentElement.classList.toggle('dark', themeMode === 'dark');
+  });
+</script>

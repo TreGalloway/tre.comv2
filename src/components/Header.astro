@@ -1,0 +1,25 @@
+---
+import { NAV_LINKS } from '@/site.config';
+import ThemeToggle from './ThemeToggle.astro';
+import ThemeSwitcher from './ThemeSwitcher.astro';
+---
+
+<header class="border-b border-line bg-paper/80 backdrop-blur">
+  <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+    <a href="/" class="text-sm font-medium tracking-tight text-ink">Tre' Galloway</a>
+    <nav class="hidden items-center gap-6 sm:flex">
+      {NAV_LINKS.map((link) => (
+        <a
+          href={link.href}
+          class="text-sm text-ink-soft transition-colors hover:text-ink"
+        >
+          {link.name}
+        </a>
+      ))}
+    </nav>
+    <div class="flex items-center gap-2">
+      <ThemeSwitcher />
+      <ThemeToggle />
+    </div>
+  </div>
+</header>

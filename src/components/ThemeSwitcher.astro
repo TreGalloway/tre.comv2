@@ -1,0 +1,46 @@
+---
+
+---
+
+<div class="flex items-center gap-1 rounded-lg border border-line bg-surface/50 p-1 text-xs text-ink-soft">
+  <button
+    type="button"
+    data-theme-option="serendipity"
+    class="rounded-md px-2 py-1 transition-colors hover:text-ink data-[active]:bg-paper data-[active]:text-ink data-[active]:shadow-sm"
+    aria-label="Use Serendipity theme"
+  >
+    Serendipity
+  </button>
+  <button
+    type="button"
+    data-theme-option="kanagawa"
+    class="rounded-md px-2 py-1 transition-colors hover:text-ink data-[active]:bg-paper data-[active]:text-ink data-[active]:shadow-sm"
+    aria-label="Use Kanagawa theme"
+  >
+    Kanagawa
+  </button>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('[data-theme-option]');
+  const setActive = () => {
+    const current = localStorage.getItem('theme-family') || 'serendipity';
+    buttons.forEach((btn) => {
+      const option = btn.getAttribute('data-theme-option');
+      btn.toggleAttribute('data-active', option === current);
+    });
+  };
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const option = btn.getAttribute('data-theme-option');
+      if (option) {
+        document.documentElement.setAttribute('data-theme', option);
+        localStorage.setItem('theme-family', option);
+        setActive();
+      }
+    });
+  });
+
+  setActive();
+</script>

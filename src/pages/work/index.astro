@@ -1,0 +1,33 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import WorkCard from '@/components/WorkCard.astro';
+import { getCollection } from 'astro:content';
+
+const works = await getCollection('work', ({ data }) => !data.draft);
+works.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Work" description="Selected projects">
+  <section class="mx-auto max-w-5xl px-6 py-20">
+    <div class="mb-10 max-w-2xl">
+      <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
+        Work
+      </p>
+      <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        Selected work
+      </h1>
+      <p class="mt-4 text-lg text-ink-soft">
+        A selection of projects I've built and shipped.
+      </p>
+    </div>
+    {works.length > 0 ? (
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {works.map((work) => (
+          <WorkCard work={work} />
+        ))}
+      </div>
+    ) : (
+      <p class="text-sm text-ink-soft">No work yet.</p>
+    )}
+  </section>
+</Layout>

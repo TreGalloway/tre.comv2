@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Serendipity (default) */
+:root {
+  color-scheme: light;
+  --paper: #f6f7fb;
+  --ink: #3f4363;
+  --ink-soft: #505575;
+  --line: #dcdfef;
+  --surface: #eaebee;
+  --accent: #e58678;
+  --accent-soft: #c25a4d;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --paper: #202231;
+  --ink: #dee0ef;
+  --ink-soft: #6b6d7c;
+  --line: #363847;
+  --surface: #272938;
+  --accent: #d6b4b4;
+  --accent-soft: #d1918f;
+}
+
+/* Kanagawa */
+:root[data-theme='kanagawa'] {
+  color-scheme: light;
+  --paper: #f6f5ec;
+  --ink: #43436c;
+  --ink-soft: #545464;
+  --line: #e6e2d3;
+  --surface: #eee9d2;
+  --accent: #7e9cd8;
+  --accent-soft: #957fb8;
+}
+
+:root[data-theme='kanagawa'].dark {
+  color-scheme: dark;
+  --paper: #1f1f28;
+  --ink: #dcd7ba;
+  --ink-soft: #c8c093;
+  --line: #2a2a37;
+  --surface: #272733;
+  --accent: #7e9cd8;
+  --accent-soft: #d27e99;
+}
+
+@theme inline {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji";
+  --font-mono: "SF Mono", SFMono-Regular, ui-monospace, "DejaVu Sans Mono",
+    Menlo, Consolas, monospace;
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+}
+
+.prose {
+  --tw-prose-body: var(--color-ink-soft);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-links: var(--color-ink);
+  --tw-prose-bullets: var(--color-ink-soft);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-line);
+  --tw-prose-code: var(--color-ink);
+  --tw-prose-lead: var(--color-ink-soft);
+}
+
+.prose :where(h1, h2, h3, h4) {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.prose :where(a) {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
