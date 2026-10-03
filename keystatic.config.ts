@@ -4,8 +4,8 @@ export default config({
   storage: {
     kind: 'github',
     repo: {
-      owner: process.env.KEYSTATIC_GITHUB_OWNER || 'TreGalloway',
-      name: process.env.KEYSTATIC_GITHUB_REPO || 'kanagawa-blog',
+      owner: 'TreGalloway',
+      name: 'tre.comv2',
     },
     branchPrefix: 'keystatic/',
   },

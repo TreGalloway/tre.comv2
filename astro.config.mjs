@@ -4,13 +4,13 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
-
+import keystatic from '@keystatic/astro';
 const SITE_URL = process.env.SITE_URL || 'https://tregalloway.com';
 
 export default defineConfig({
   site: SITE_URL,
   output: 'static',
-  integrations: [sitemap(), react(), markdoc()],
+  integrations: [sitemap(), react(), markdoc(), keystatic()],
   prefetch: true,
   vite: {
     plugins: [tailwindcss()],
