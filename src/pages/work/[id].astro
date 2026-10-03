@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 const { work } = Astro.props;
 const { Content } = await render(work);
 const { title, summary, role, date, tags, url, repo } = work.data;
----
+export const prerender = true;
 
 <Layout title={title} description={summary}>
   <article class="mx-auto max-w-3xl px-6 py-20">
@@ -54,5 +54,3 @@ const { title, summary, role, date, tags, url, repo } = work.data;
     </div>
   </article>
 </Layout>
----
-export const prerender = true;

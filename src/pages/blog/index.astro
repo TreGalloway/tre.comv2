@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
----
+export const prerender = true;
 
 <Layout title="Blog" description="Latest writing">
   <section class="mx-auto max-w-5xl px-6 py-20">
@@ -31,5 +31,3 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
     )}
   </section>
 </Layout>
----
-export const prerender = true;

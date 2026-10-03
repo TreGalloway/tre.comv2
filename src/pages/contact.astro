@@ -2,7 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import Button from '@/components/Button.astro';
 import { SITE } from '@/site.config';
----
+export const prerender = true;
 
 <Layout title="Contact" description="Get in touch">
   <section class="mx-auto max-w-5xl px-6 py-20">
@@ -22,5 +22,3 @@ import { SITE } from '@/site.config';
     </div>
   </section>
 </Layout>
----
-export const prerender = true;

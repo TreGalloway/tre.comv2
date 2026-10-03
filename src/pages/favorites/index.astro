@@ -3,7 +3,7 @@ import Layout from '@/layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 const favorites = await getCollection('favorites');
----
+export const prerender = true;
 
 <Layout title="Things I Enjoy" description="Things I enjoy - manga, comics, anime, books, games, and movies">
   <section class="mx-auto max-w-3xl px-6 py-20">
@@ -52,5 +52,3 @@ const favorites = await getCollection('favorites');
     )}
   </section>
 </Layout>
----
-export const prerender = true;

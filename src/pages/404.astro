@@ -1,7 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Button from '@/components/Button.astro';
----
+export const prerender = true;
 
 <Layout title="404" description="Page not found">
   <section class="mx-auto flex max-w-5xl flex-col items-center justify-center px-6 py-24 text-center">
@@ -17,5 +17,3 @@ import Button from '@/components/Button.astro';
     </div>
   </section>
 </Layout>
----
-export const prerender = true;
