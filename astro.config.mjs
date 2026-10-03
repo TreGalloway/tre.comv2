@@ -6,7 +6,6 @@ import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
 import keystatic from '@keystatic/astro';
 import cloudflare from '@astrojs/cloudflare'
-import wrangler from '@astrojs/cloudflare'
 
 const SITE_URL = process.env.SITE_URL || 'https://tregalloway.com';
 
@@ -14,7 +13,8 @@ const SITE_URL = process.env.SITE_URL || 'https://tregalloway.com';
 export default defineConfig({
   site: SITE_URL,
   output: 'static',
-  integrations: [sitemap(), react(), markdoc(), keystatic(), cloudflare(), wrangler()],
+  adapter: cloudflare(),
+  integrations: [sitemap(), react(), markdoc(), keystatic()],
   prefetch: true,
   vite: {
     plugins: [tailwindcss()],
