@@ -79,4 +79,81 @@ const favorites = defineCollection({
   }),
 });
 
-export const collections = { blog, work, uses, favorites };
+const cta = z.object({
+  label: z.string(),
+  href: z.string(),
+});
+
+const section = z.object({
+  eyebrow: z.string(),
+  heading: z.string(),
+  ctaLabel: z.string(),
+  ctaHref: z.string(),
+  emptyText: z.string(),
+});
+
+const pages = defineCollection({
+  loader: glob({ base: './src/content/pages', pattern: '**/*.mdx' }),
+  schema: z.discriminatedUnion('kind', [
+    z.object({
+      kind: z.literal('home'),
+      hero: z.object({
+        eyebrow: z.string(),
+        heading: z.string(),
+        subheading: z.string(),
+        primaryCta: cta,
+        secondaryCta: cta,
+      }),
+      postsSection: section,
+      workSection: section,
+    }),
+    z.object({
+      kind: z.literal('about'),
+      eyebrow: z.string(),
+      heading: z.string(),
+      intro: z.string(),
+      education: z.object({
+        heading: z.string(),
+        items: z.array(
+          z.object({
+            institution: z.string(),
+            detail: z.string(),
+            status: z.string(),
+          }),
+        ),
+      }),
+      focusAreas: z.object({
+        heading: z.string(),
+        items: z.array(z.object({ label: z.string() })),
+      }),
+      location: z.object({
+        heading: z.string(),
+        text: z.string(),
+      }),
+      cta,
+    }),
+    z.object({
+      kind: z.literal('contact'),
+      eyebrow: z.string(),
+      heading: z.string(),
+      intro: z.string(),
+      cta,
+    }),
+    z.object({
+      kind: z.literal('not-found'),
+      eyebrow: z.string(),
+      heading: z.string(),
+      message: z.string(),
+      cta,
+    }),
+    z.object({
+      kind: z.literal('index'),
+      eyebrow: z.string(),
+      heading: z.string(),
+      intro: z.string(),
+      emptyText: z.string(),
+    }),
+  ]),
+});
+
+export const collections = { blog, work, uses, favorites, pages };

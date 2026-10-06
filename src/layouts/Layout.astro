@@ -2,7 +2,8 @@
 import BaseHead from '@/components/BaseHead.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import { getSeo, getSite } from '@/lib/content';
+import { SITE } from '@/site.config';
+import { SEO } from '@/seo.config';
 
 interface Props {
   title: string;
@@ -15,11 +16,10 @@ interface Props {
 }
 
 const { title, description, seo } = Astro.props;
-const [site, seoDefaults] = await Promise.all([getSite(), getSeo()]);
 
 const canonical = new URL(
   Astro.url.pathname,
-  Astro.site ?? site.url ?? 'https://tregalloway.com',
+  Astro.site ?? SITE.url ?? 'https://tregalloway.com',
 ).href;
 ---
 
@@ -27,18 +27,18 @@ const canonical = new URL(
   <head>
     <BaseHead
       title={seo?.metaTitle || title}
-      description={seo?.metaDescription || description || seoDefaults.defaultDescription}
-      ogImage={seo?.ogImage || seoDefaults.defaultOgImage}
-      titleTemplate={seoDefaults.titleTemplate}
-      twitterHandle={seoDefaults.twitterHandle}
+      description={seo?.metaDescription || description || SEO.defaultDescription}
+      ogImage={seo?.ogImage || SEO.defaultOgImage}
+      titleTemplate={SEO.titleTemplate}
+      twitterHandle={SEO.twitterHandle}
       canonical={canonical}
     />
   </head>
   <body>
-    <Header site={site} />
+    <Header />
     <main>
       <slot />
     </main>
-    <Footer site={site} />
+    <Footer />
   </body>
 </html>

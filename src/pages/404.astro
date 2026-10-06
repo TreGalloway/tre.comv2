@@ -1,9 +1,13 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Button from '@/components/Button.astro';
-import { getNotFound } from '@/lib/content';
+import { getEntry } from 'astro:content';
 
-const notFound = await getNotFound();
+const entry = await getEntry('pages', 'not-found');
+if (!entry || entry.data.kind !== 'not-found') {
+  throw new Error('Missing pages/not-found.mdx');
+}
+const notFound = entry.data;
 export const prerender = true;
 ---
 

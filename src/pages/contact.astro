@@ -1,9 +1,13 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Button from '@/components/Button.astro';
-import { getContact } from '@/lib/content';
+import { getEntry } from 'astro:content';
 
-const contact = await getContact();
+const entry = await getEntry('pages', 'contact');
+if (!entry || entry.data.kind !== 'contact') {
+  throw new Error('Missing pages/contact.mdx');
+}
+const contact = entry.data;
 export const prerender = true;
 ---
 

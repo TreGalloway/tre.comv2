@@ -30,9 +30,9 @@ Package scripts: `dev`, `build`, `preview`, `astro`.
 ## Layout
 
 - `astro.config.mjs` — site URL defaults to `https://tregalloway.com` (env-driven via `SITE_URL`); uses `output: 'static'` with the sitemap and MDX integrations, prefetch, and Tailwind v4 via a Vite plugin.
-- `src/lib/` — content layer. `content.ts` (typed getters returning fallbacks), `types.ts` (explicit singleton types).
-- `src/constants/fallbacks.ts` — single source of truth for every singleton; edit fallbacks here, not in pages.
-- Path aliases: `@/components/*`, `@/layouts/*`, `@/styles/*`, `@/utils/*`, `@/lib/*`, `@/constants/*`.
+- `src/site.config.ts` — site chrome: name, logo, tagline, description, status, url, social, nav (with `visible`), footer.
+- `src/seo.config.ts` — SEO defaults: titleTemplate, defaultDescription, defaultOgImage, twitterHandle, keywords.
+- Path aliases: `@/components/*`, `@/layouts/*`, `@/styles/*`, `@/utils/*` (plus `@/*` → `src/*`).
 
 ## Content collections
 
@@ -42,14 +42,16 @@ Content lives in `src/content/` and schemas are defined in `src/content.config.t
 - `work/` — title, summary (max 160), role, date, tags, cover, url, repo, liveLabel, codeLabel, featured, draft, seo.
 - `uses/` — title, category, items[] (name, description).
 - `favorites/` — title, category, items[] (name, description, url, featured).
+- `pages/` — page copy singletons (`home`, `about`, `contact`, `not-found`, and the four `*-index` files). Frontmatter is a discriminated union on `kind` (`home` | `about` | `contact` | `not-found` | `index`); read with `getEntry('pages', '<id>')` and narrow on `entry.data.kind`.
 
 Dynamic routes: `src/pages/blog/[...slug].astro`, `src/pages/work/[id].astro`.
 
-## Content layer & fallbacks
+## Site & SEO config
 
-Page copy, site chrome (nav, footer, header, SEO), and all page intros are **singletons** sourced entirely from `src/constants/fallbacks.ts`. Getters in `src/lib/content.ts` return those defaults directly; types live in `src/lib/types.ts`. Entry bodies (blog/work/uses/favorites) use Astro content collections with MDX rendering.
+Site chrome comes from `src/site.config.ts` (`SITE`, with `SiteContent = typeof SITE`) and SEO defaults from `src/seo.config.ts` (`SEO`). `Layout.astro`, `Header.astro`, and `Footer.astro` import them directly; there is no reader/getter layer.
 
-- Add a new editable page/section: add a default in `src/constants/fallbacks.ts`, a type in `src/lib/types.ts`, and a getter in `src/lib/content.ts`.
+- Page copy lives in the `pages` MDX collection (`src/content/pages/*.mdx`), not in TS constants.
+- To add a page: add `src/content/pages/<id>.mdx`, extend the `pages` schema in `src/content.config.ts`, and read it with `getEntry`.
 - With `output: 'static'`, all pages are prerendered by default.
 
 ## Theming

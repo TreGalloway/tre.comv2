@@ -1,10 +1,13 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import PostCard from '@/components/PostCard.astro';
-import { getCollection } from 'astro:content';
-import { getBlogIndex } from '@/lib/content';
+import { getCollection, getEntry } from 'astro:content';
 
-const page = await getBlogIndex();
+const entry = await getEntry('pages', 'blog-index');
+if (!entry || entry.data.kind !== 'index') {
+  throw new Error('Missing pages/blog-index.mdx');
+}
+const page = entry.data;
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());

@@ -1,23 +1,18 @@
 ---
-import type { SiteContent } from '@/lib/types';
+import { SITE } from '@/site.config';
 import ThemeToggle from './ThemeToggle.astro';
 import ThemeSwitcher from './ThemeSwitcher.astro';
 
-interface Props {
-  site: SiteContent;
-}
-
-const { site } = Astro.props;
-const nav = site.nav.filter((link) => link.visible);
+const nav = SITE.nav.filter((link) => link.visible);
 ---
 
 <header class="border-b border-line bg-paper/80 backdrop-blur">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
     <a href="/" class="text-sm font-medium tracking-tight text-ink">
-      {site.logo ? (
-        <img src={site.logo} alt={site.name} class="h-6 w-auto" />
+      {SITE.logo ? (
+        <img src={SITE.logo} alt={SITE.name} class="h-6 w-auto" />
       ) : (
-        site.name
+        SITE.name
       )}
     </a>
     <nav class="hidden items-center gap-6 sm:flex">

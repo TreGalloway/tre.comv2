@@ -1,9 +1,12 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getCollection, render } from 'astro:content';
-import { getFavoritesIndex } from '@/lib/content';
+import { getCollection, getEntry, render } from 'astro:content';
 
-const page = await getFavoritesIndex();
+const entry = await getEntry('pages', 'favorites-index');
+if (!entry || entry.data.kind !== 'index') {
+  throw new Error('Missing pages/favorites-index.mdx');
+}
+const page = entry.data;
 
 const entries = await getCollection('favorites');
 const favorites = await Promise.all(

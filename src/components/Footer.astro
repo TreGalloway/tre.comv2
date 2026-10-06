@@ -1,16 +1,11 @@
 ---
-import type { SiteContent } from '@/lib/types';
+import { SITE } from '@/site.config';
 
-interface Props {
-  site: SiteContent;
-}
-
-const { site } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-line">
   <div class="mx-auto max-w-5xl px-6 py-8 text-sm text-ink-soft">
-    <p>&copy; {year} {site.footer.copyrightName}. All rights reserved.</p>
+    <p>&copy; {year} {SITE.footer.copyrightName}. All rights reserved.</p>
   </div>
 </footer>

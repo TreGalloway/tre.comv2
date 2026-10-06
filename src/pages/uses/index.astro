@@ -1,9 +1,12 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getCollection, render } from 'astro:content';
-import { getUsesIndex } from '@/lib/content';
+import { getCollection, getEntry, render } from 'astro:content';
 
-const page = await getUsesIndex();
+const entry = await getEntry('pages', 'uses-index');
+if (!entry || entry.data.kind !== 'index') {
+  throw new Error('Missing pages/uses-index.mdx');
+}
+const page = entry.data;
 
 const entries = await getCollection('uses');
 const uses = await Promise.all(
