@@ -1,8 +1,14 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
-const uses = await getCollection('uses');
+const entries = await getCollection('uses');
+const uses = await Promise.all(
+  entries.map(async (entry) => ({
+    entry,
+    Content: (await render(entry)).Content,
+  })),
+);
 export const prerender = true;
 ---
 
@@ -19,9 +25,12 @@ export const prerender = true;
     </div>
     {uses.length > 0 ? (
       <div class="space-y-10">
-        {uses.map((entry) => (
+        {uses.map(({ entry, Content }) => (
           <section>
             <h2 class="mb-4 text-lg font-semibold text-ink">{entry.data.title}</h2>
+            <div class="prose prose-neutral mb-4 max-w-none dark:prose-invert">
+              <Content />
+            </div>
             <ul class="space-y-3">
               {entry.data.items.map((item) => (
                 <li class="rounded-lg border border-line bg-surface/40 p-4">

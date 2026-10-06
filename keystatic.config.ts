@@ -1,14 +1,18 @@
 import { config, fields, collection } from '@keystatic/core';
 
 export default config({
-  storage: {
-    kind: 'github',
-    repo: {
-      owner: 'TreGalloway',
-      name: 'tre.comv2',
-    },
-    branchPrefix: 'keystatic/',
-  },
+  storage: import.meta.env.PROD
+    ? {
+        kind: 'github',
+        repo: {
+          owner: 'TreGalloway',
+          name: 'tre.comv2',
+        },
+        branchPrefix: 'keystatic/',
+      }
+    : {
+        kind: 'local',
+      },
   collections: {
     blog: collection({
       label: 'Blog',

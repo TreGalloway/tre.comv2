@@ -29,7 +29,7 @@ Package scripts: `dev`, `build`, `preview`, `astro`.
 
 ## Layout
 
-- `astro.config.mjs` — site URL defaults to `https://tregalloway.com` (env-driven via `SITE_URL`); has sitemap, prefetch, React/Markdoc for Keystatic, Keystatic integration, Tailwind v4 via Vite plugin.
+- `astro.config.mjs` — site URL defaults to `https://tregalloway.com` (env-driven via `SITE_URL`); has sitemap, prefetch, React/Markdoc for Keystatic, Keystatic integration, Tailwind v4 via Vite plugin. Uses the **Node adapter in dev** and the **Cloudflare adapter for production builds** (`NODE_ENV`), because Keystatic local storage needs Node `fs` while Cloudflare's workerd dev runtime breaks the Keystatic API route.
 - `src/site.config.ts` — single source of truth for site identity (`SITE`, `NAV_LINKS`). Edit nav here, not in each page.
 - Path aliases: `@/components/*`, `@/layouts/*`, `@/styles/*`, `@/utils/*`, `@/site.config`.
 
@@ -46,7 +46,7 @@ Dynamic routes: `src/pages/blog/[...slug].astro`, `src/pages/work/[id].astro`.
 
 ## Keystatic CMS
 
-Keystatic is configured in `keystatic.config.ts` with **GitHub storage** (repo: `TreGalloway/kanagawa-blog`, branchPrefix `keystatic/`).
+Keystatic is configured in `keystatic.config.ts` with **local storage in dev** and **GitHub storage in production** (repo: `TreGalloway/tre.comv2`, branchPrefix `keystatic/`). Dev saves write directly to `src/content/*` so pages update immediately; production edits are committed to GitHub and require a rebuild.
 - Admin UI: `/keystatic` (when dev server running)
 - Content format: Markdoc (`fields.markdoc`) written to `src/content/*/*.mdoc` (also compatible with MD)
 - Env vars: see `.env.example` (`KEYSTATIC_GITHUB_OWNER`, `KEYSTATIC_GITHUB_REPO`, plus OAuth vars for production)
