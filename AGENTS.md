@@ -30,19 +30,27 @@ Package scripts: `dev`, `build`, `preview`, `astro`.
 ## Layout
 
 - `astro.config.mjs` — site URL defaults to `https://tregalloway.com` (env-driven via `SITE_URL`); has sitemap, prefetch, React/Markdoc for Keystatic, Keystatic integration, Tailwind v4 via Vite plugin. Uses the **Node adapter in dev** and the **Cloudflare adapter for production builds** (`NODE_ENV`), because Keystatic local storage needs Node `fs` while Cloudflare's workerd dev runtime breaks the Keystatic API route.
-- `src/site.config.ts` — single source of truth for site identity (`SITE`, `NAV_LINKS`). Edit nav here, not in each page.
-- Path aliases: `@/components/*`, `@/layouts/*`, `@/styles/*`, `@/utils/*`, `@/site.config`.
+- `src/lib/` — content layer. `keystatic.ts` (Keystatic `createReader`), `content.ts` (typed getters with fallbacks), `types.ts` (reader-derived types), `merge.ts` (`withFallback`).
+- `src/constants/fallbacks.ts` — default values for every singleton; edit fallbacks here, not in pages.
+- Path aliases: `@/components/*`, `@/layouts/*`, `@/styles/*`, `@/utils/*`, `@/lib/*`, `@/constants/*`.
 
 ## Content collections
 
 Content lives in `src/content/` and schemas are defined in `src/content.config.ts` (Astro 7 glob loaders). Supports `.md` and `.mdoc`.
 
-- `blog/` — frontmatter: title, description (max 200), pubDate, category (default 'General'), tags[], optional heroImage, draft (default false).
-- `work/` — title, summary (max 160), role, date, tags, cover, url, repo, featured, draft.
+- `blog/` — frontmatter: title, description (max 200), pubDate, category (default 'General'), tags[], optional heroImage, draft (default false), seo (metaTitle/metaDescription/ogImage).
+- `work/` — title, summary (max 160), role, date, tags, cover, url, repo, liveLabel, codeLabel, featured, draft, seo.
 - `uses/` — title, category, items[] (name, description).
 - `favorites/` — title, category, items[] (name, description, url, featured).
 
 Dynamic routes: `src/pages/blog/[...slug].astro`, `src/pages/work/[id].astro`.
+
+## Content layer & fallbacks
+
+Page copy, site chrome (nav, footer, header, SEO), and all page intros are Keystatic **singletons** under `src/content/singletons/*/index.yaml`, read via the Keystatic Reader API (`src/lib/keystatic.ts`). Getters in `src/lib/content.ts` merge reader data over defaults in `src/constants/fallbacks.ts` using `withFallback` (only `null`/`undefined` fall back; empty strings/arrays are intentional). Entry bodies (blog/work/uses/favorites) stay on Astro content collections for Markdoc rendering.
+
+- Add a new editable page/section: add a singleton in `keystatic.config.ts`, a default in `src/constants/fallbacks.ts`, a type in `src/lib/types.ts`, and a getter in `src/lib/content.ts`.
+- The reader uses Node `fs`, so it only runs at build time — keep reader-using pages `prerender = true`.
 
 ## Keystatic CMS
 

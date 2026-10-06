@@ -4,17 +4,39 @@ import '@/styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string | null;
+  titleTemplate?: string;
+  twitterHandle?: string;
+  canonical?: string;
 }
 
-const { title, description = '' } = Astro.props;
+const {
+  title,
+  description = '',
+  ogImage,
+  titleTemplate = '%s',
+  twitterHandle,
+  canonical,
+} = Astro.props;
+
+const fullTitle = titleTemplate.includes('%s')
+  ? titleTemplate.replace('%s', title)
+  : title;
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />
-<title>{title}</title>
+<title>{fullTitle}</title>
 {description && <meta name="description" content={description} />}
+{canonical && <link rel="canonical" href={canonical} />}
+<meta property="og:type" content="website" />
+<meta property="og:title" content={fullTitle} />
+{description && <meta property="og:description" content={description} />}
+{ogImage && <meta property="og:image" content={ogImage} />}
+<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+{twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
 <meta name="generator" content={Astro.generator} />
 
 <script is:inline>

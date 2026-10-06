@@ -1,6 +1,9 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import { getUsesIndex } from '@/lib/content';
+
+const page = await getUsesIndex();
 
 const entries = await getCollection('uses');
 const uses = await Promise.all(
@@ -12,16 +15,16 @@ const uses = await Promise.all(
 export const prerender = true;
 ---
 
-<Layout title="Uses" description="Tools, apps, and gear I use">
+<Layout title="Uses" description={page.intro}>
   <section class="mx-auto max-w-3xl px-6 py-20">
     <div class="mb-10">
-      <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">Uses</p>
-      <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-        What I use
-      </h1>
-      <p class="mt-4 text-lg text-ink-soft">
-        A curated list of the tools and gear I rely on day to day.
+      <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
+        {page.eyebrow}
       </p>
+      <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        {page.heading}
+      </h1>
+      <p class="mt-4 text-lg text-ink-soft">{page.intro}</p>
     </div>
     {uses.length > 0 ? (
       <div class="space-y-10">
@@ -45,7 +48,7 @@ export const prerender = true;
         ))}
       </div>
     ) : (
-      <p class="text-sm text-ink-soft">Nothing here yet.</p>
+      <p class="text-sm text-ink-soft">{page.emptyText}</p>
     )}
   </section>
 </Layout>

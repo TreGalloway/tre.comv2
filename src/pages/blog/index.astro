@@ -2,24 +2,25 @@
 import Layout from '@/layouts/Layout.astro';
 import PostCard from '@/components/PostCard.astro';
 import { getCollection } from 'astro:content';
+import { getBlogIndex } from '@/lib/content';
+
+const page = await getBlogIndex();
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 export const prerender = true;
 ---
 
-<Layout title="Blog" description="Latest writing">
+<Layout title="Blog" description={page.intro}>
   <section class="mx-auto max-w-5xl px-6 py-20">
     <div class="mb-10 max-w-2xl">
       <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
-        Blog
+        {page.eyebrow}
       </p>
       <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-        Latest writing
+        {page.heading}
       </h1>
-      <p class="mt-4 text-lg text-ink-soft">
-        Thoughts on software, design, and building things.
-      </p>
+      <p class="mt-4 text-lg text-ink-soft">{page.intro}</p>
     </div>
     {posts.length > 0 ? (
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -28,7 +29,7 @@ export const prerender = true;
         ))}
       </div>
     ) : (
-      <p class="text-sm text-ink-soft">No posts yet.</p>
+      <p class="text-sm text-ink-soft">{page.emptyText}</p>
     )}
   </section>
 </Layout>

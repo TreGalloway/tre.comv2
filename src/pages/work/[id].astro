@@ -13,11 +13,12 @@ export async function getStaticPaths() {
 
 const { work } = Astro.props;
 const { Content } = await render(work);
-const { title, summary, role, date, tags, url, repo } = work.data;
+const { title, summary, role, date, tags, url, repo, liveLabel, codeLabel, seo } =
+  work.data;
 export const prerender = true;
 ---
 
-<Layout title={title} description={summary}>
+<Layout title={title} description={summary} seo={seo}>
   <article class="mx-auto max-w-3xl px-6 py-20">
     <header class="mb-10">
       <div class="mb-4 flex flex-wrap items-center gap-4 text-xs text-ink-soft">
@@ -42,10 +43,10 @@ export const prerender = true;
         <p class="mt-4 text-lg leading-relaxed text-ink-soft">{summary}</p>
       )}
       <div class="mt-6 flex gap-3">
-        {url && <Button href={url}>Live site</Button>}
+        {url && <Button href={url}>{liveLabel}</Button>}
         {repo && (
           <Button href={repo} variant="ghost">
-            View code
+            {codeLabel}
           </Button>
         )}
       </div>

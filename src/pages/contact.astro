@@ -1,24 +1,26 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Button from '@/components/Button.astro';
-import { SITE } from '@/site.config';
+import { getContact } from '@/lib/content';
+
+const contact = await getContact();
 export const prerender = true;
 ---
 
-<Layout title="Contact" description="Get in touch">
+<Layout title="Contact" description={contact.intro}>
   <section class="mx-auto max-w-5xl px-6 py-20">
     <div class="max-w-2xl">
       <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
-        Contact
+        {contact.eyebrow}
       </p>
       <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-        Get in touch
+        {contact.heading}
       </h1>
       <p class="mt-6 text-lg leading-relaxed text-ink-soft">
-        Have a project in mind or just want to say hi? Feel free to reach out.
+        {contact.intro}
       </p>
       <div class="mt-8">
-        <Button href={SITE.social.email}>Send an email</Button>
+        <Button href={contact.cta.href}>{contact.cta.label}</Button>
       </div>
     </div>
   </section>

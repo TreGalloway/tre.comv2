@@ -2,24 +2,43 @@
 import BaseHead from '@/components/BaseHead.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import { getSeo, getSite } from '@/lib/content';
 
 interface Props {
   title: string;
   description?: string;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    ogImage?: string | null;
+  } | null;
 }
 
-const { title, description } = Astro.props;
+const { title, description, seo } = Astro.props;
+const [site, seoDefaults] = await Promise.all([getSite(), getSeo()]);
+
+const canonical = new URL(
+  Astro.url.pathname,
+  Astro.site ?? site.url ?? 'https://tregalloway.com',
+).href;
 ---
 
 <html lang="en" data-theme="serendipity">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead
+      title={seo?.metaTitle || title}
+      description={seo?.metaDescription || description || seoDefaults.defaultDescription}
+      ogImage={seo?.ogImage || seoDefaults.defaultOgImage}
+      titleTemplate={seoDefaults.titleTemplate}
+      twitterHandle={seoDefaults.twitterHandle}
+      canonical={canonical}
+    />
   </head>
   <body>
-    <Header />
+    <Header site={site} />
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer site={site} />
   </body>
 </html>

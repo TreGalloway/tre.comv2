@@ -1,20 +1,25 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Button from '@/components/Button.astro';
+import { getNotFound } from '@/lib/content';
+
+const notFound = await getNotFound();
 export const prerender = true;
 ---
 
-<Layout title="404" description="Page not found">
+<Layout title={notFound.heading} description={notFound.message}>
   <section class="mx-auto flex max-w-5xl flex-col items-center justify-center px-6 py-24 text-center">
-    <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">404</p>
+    <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
+      {notFound.eyebrow}
+    </p>
     <h1 class="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-      Page not found
+      {notFound.heading}
     </h1>
     <p class="mt-4 max-w-md text-lg text-ink-soft">
-      The page you're looking for doesn't exist or has been moved.
+      {notFound.message}
     </p>
     <div class="mt-8">
-      <Button href="/">Back to home</Button>
+      <Button href={notFound.cta.href}>{notFound.cta.label}</Button>
     </div>
   </section>
 </Layout>

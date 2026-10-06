@@ -4,7 +4,9 @@ import PostCard from '@/components/PostCard.astro';
 import WorkCard from '@/components/WorkCard.astro';
 import Button from '@/components/Button.astro';
 import { getCollection } from 'astro:content';
-import { SITE } from '@/site.config';
+import { getHome } from '@/lib/content';
+
+const home = await getHome();
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const recentPosts = allPosts
@@ -19,21 +21,25 @@ const featuredWork = allWork
 export const prerender = true;
 ---
 
-<Layout title="Home" description={SITE.description}>
+<Layout title="Home" description={home.hero.subheading}>
   <section class="mx-auto max-w-5xl px-6 pt-24 pb-20 sm:pt-32">
     <div class="max-w-2xl">
       <p class="mb-4 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
-        {SITE.status}
+        {home.hero.eyebrow}
       </p>
       <h1 class="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-        {SITE.tagline}
+        {home.hero.heading}
       </h1>
       <p class="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
-        {SITE.description}
+        {home.hero.subheading}
       </p>
       <div class="mt-8 flex items-center gap-4">
-        <Button href="/work">View the work</Button>
-        <Button href="/contact" variant="ghost">Get in touch</Button>
+        <Button href={home.hero.primaryCta.href}>
+          {home.hero.primaryCta.label}
+        </Button>
+        <Button href={home.hero.secondaryCta.href} variant="ghost">
+          {home.hero.secondaryCta.label}
+        </Button>
       </div>
     </div>
   </section>
@@ -42,13 +48,15 @@ export const prerender = true;
     <div class="mb-8 flex items-end justify-between">
       <div>
         <p class="mb-2 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
-          Writing
+          {home.postsSection.eyebrow}
         </p>
         <h2 class="text-2xl font-semibold tracking-tight text-ink">
-          Recent posts
+          {home.postsSection.heading}
         </h2>
       </div>
-      <Button href="/blog" variant="ghost">View all</Button>
+      <Button href={home.postsSection.ctaHref} variant="ghost">
+        {home.postsSection.ctaLabel}
+      </Button>
     </div>
     {recentPosts.length > 0 ? (
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -57,7 +65,7 @@ export const prerender = true;
         ))}
       </div>
     ) : (
-      <p class="text-sm text-ink-soft">No posts yet.</p>
+      <p class="text-sm text-ink-soft">{home.postsSection.emptyText}</p>
     )}
   </section>
 
@@ -65,13 +73,15 @@ export const prerender = true;
     <div class="mb-8 flex items-end justify-between">
       <div>
         <p class="mb-2 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
-          Selected work
+          {home.workSection.eyebrow}
         </p>
         <h2 class="text-2xl font-semibold tracking-tight text-ink">
-          Featured projects
+          {home.workSection.heading}
         </h2>
       </div>
-      <Button href="/work" variant="ghost">View all</Button>
+      <Button href={home.workSection.ctaHref} variant="ghost">
+        {home.workSection.ctaLabel}
+      </Button>
     </div>
     {featuredWork.length > 0 ? (
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -80,7 +90,7 @@ export const prerender = true;
         ))}
       </div>
     ) : (
-      <p class="text-sm text-ink-soft">No featured work yet.</p>
+      <p class="text-sm text-ink-soft">{home.workSection.emptyText}</p>
     )}
   </section>
 </Layout>

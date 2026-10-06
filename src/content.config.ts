@@ -13,6 +13,13 @@ const blog = defineCollection({
       tags: z.array(z.string()).default([]),
       heroImage: image().optional(),
       draft: z.boolean().default(false),
+      seo: z
+        .object({
+          metaTitle: z.string().nullish(),
+          metaDescription: z.string().nullish(),
+          ogImage: z.string().nullish(),
+        })
+        .nullish(),
     }),
 });
 
@@ -28,8 +35,17 @@ const work = defineCollection({
       cover: image().optional(),
       url: z.url().optional(),
       repo: z.url().optional(),
+      liveLabel: z.string().default('Live site'),
+      codeLabel: z.string().default('View code'),
       featured: z.boolean().default(false),
       draft: z.boolean().default(false),
+      seo: z
+        .object({
+          metaTitle: z.string().nullish(),
+          metaDescription: z.string().nullish(),
+          ogImage: z.string().nullish(),
+        })
+        .nullish(),
     }),
 });
 

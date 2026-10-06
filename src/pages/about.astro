@@ -1,65 +1,66 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Button from '@/components/Button.astro';
-import { SITE } from '@/site.config';
+import { getAbout } from '@/lib/content';
+
+const about = await getAbout();
 export const prerender = true;
 ---
 
-<Layout title="About" description={SITE.about.bio}>
+<Layout title="About" description={about.intro}>
   <section class="mx-auto max-w-3xl px-6 py-20">
     <div class="mb-10">
-      <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">About</p>
+      <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
+        {about.eyebrow}
+      </p>
       <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-        {SITE.about.name}
+        {about.heading}
       </h1>
-      <p class="mt-4 text-lg leading-relaxed text-ink-soft">{SITE.about.bio}</p>
+      <p class="mt-4 text-lg leading-relaxed text-ink-soft">{about.intro}</p>
     </div>
 
     <div class="space-y-10">
       <section>
-        <h2 class="mb-4 text-lg font-semibold text-ink">Education</h2>
+        <h2 class="mb-4 text-lg font-semibold text-ink">
+          {about.education.heading}
+        </h2>
         <div class="space-y-4">
-          <div class="rounded-lg border border-line bg-surface/40 p-4">
-            <h3 class="font-medium text-ink">
-              Delgado Community College — A.S. transfer pathway
-            </h3>
-            <p class="mt-1 text-sm text-ink-soft">In progress</p>
-          </div>
-          <div class="rounded-lg border border-line bg-surface/40 p-4">
-            <h3 class="font-medium text-ink">
-              Target: B.S. Electrical Engineering (Computer Engineering
-              concentration), LSU New Orleans / UNO
-            </h3>
-            <p class="mt-1 text-sm text-ink-soft">Expected Spring 2031</p>
-          </div>
+          {about.education.items.map((item) => (
+            <div class="rounded-lg border border-line bg-surface/40 p-4">
+              <h3 class="font-medium text-ink">{item.institution}</h3>
+              {item.detail && (
+                <p class="mt-1 text-sm text-ink-soft">{item.detail}</p>
+              )}
+              {item.status && (
+                <p class="mt-1 text-sm text-ink-soft">{item.status}</p>
+              )}
+            </div>
+          ))}
         </div>
       </section>
 
       <section>
-        <h2 class="mb-4 text-lg font-semibold text-ink">Focus areas</h2>
+        <h2 class="mb-4 text-lg font-semibold text-ink">
+          {about.focusAreas.heading}
+        </h2>
         <ul class="grid gap-3 sm:grid-cols-2">
-          <li class="rounded-lg border border-line bg-surface/40 p-4">
-            <h3 class="font-medium text-ink">Embedded systems</h3>
-          </li>
-          <li class="rounded-lg border border-line bg-surface/40 p-4">
-            <h3 class="font-medium text-ink">Computer architecture</h3>
-          </li>
-          <li class="rounded-lg border border-line bg-surface/40 p-4">
-            <h3 class="font-medium text-ink">Homelab / self-hosting</h3>
-          </li>
-          <li class="rounded-lg border border-line bg-surface/40 p-4">
-            <h3 class="font-medium text-ink">Automation</h3>
-          </li>
+          {about.focusAreas.items.map((item) => (
+            <li class="rounded-lg border border-line bg-surface/40 p-4">
+              <h3 class="font-medium text-ink">{item.label}</h3>
+            </li>
+          ))}
         </ul>
       </section>
 
       <section>
-        <h2 class="mb-4 text-lg font-semibold text-ink">Location</h2>
-        <p class="text-sm text-ink-soft">{SITE.about.location}</p>
+        <h2 class="mb-4 text-lg font-semibold text-ink">
+          {about.location.heading}
+        </h2>
+        <p class="text-sm text-ink-soft">{about.location.text}</p>
       </section>
 
       <div class="pt-4">
-        <Button href="/contact">Get in touch</Button>
+        <Button href={about.cta.href}>{about.cta.label}</Button>
       </div>
     </div>
   </section>

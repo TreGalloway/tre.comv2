@@ -1,19 +1,32 @@
 ---
-import { NAV_LINKS } from '@/site.config';
+import type { SiteContent } from '@/lib/types';
 import ThemeToggle from './ThemeToggle.astro';
 import ThemeSwitcher from './ThemeSwitcher.astro';
+
+interface Props {
+  site: SiteContent;
+}
+
+const { site } = Astro.props;
+const nav = site.nav.filter((link) => link.visible);
 ---
 
 <header class="border-b border-line bg-paper/80 backdrop-blur">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href="/" class="text-sm font-medium tracking-tight text-ink">Tre' Galloway</a>
+    <a href="/" class="text-sm font-medium tracking-tight text-ink">
+      {site.logo ? (
+        <img src={site.logo} alt={site.name} class="h-6 w-auto" />
+      ) : (
+        site.name
+      )}
+    </a>
     <nav class="hidden items-center gap-6 sm:flex">
-      {NAV_LINKS.map((link) => (
+      {nav.map((link) => (
         <a
           href={link.href}
           class="text-sm text-ink-soft transition-colors hover:text-ink"
         >
-          {link.name}
+          {link.label}
         </a>
       ))}
     </nav>

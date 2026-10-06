@@ -1,6 +1,9 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import { getFavoritesIndex } from '@/lib/content';
+
+const page = await getFavoritesIndex();
 
 const entries = await getCollection('favorites');
 const favorites = await Promise.all(
@@ -12,18 +15,16 @@ const favorites = await Promise.all(
 export const prerender = true;
 ---
 
-<Layout title="Things I Enjoy" description="Things I enjoy - manga, comics, anime, books, games, and movies">
+<Layout title="Things I Enjoy" description={page.intro}>
   <section class="mx-auto max-w-3xl px-6 py-20">
     <div class="mb-10">
       <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
-        Things I Enjoy
+        {page.eyebrow}
       </p>
       <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-        Things I enjoy
+        {page.heading}
       </h1>
-      <p class="mt-4 text-lg text-ink-soft">
-        A collection of things I enjoy - manga, comics, anime, books (ebook, physical, and audio), games, and movies.
-      </p>
+      <p class="mt-4 text-lg text-ink-soft">{page.intro}</p>
     </div>
     {favorites.length > 0 ? (
       <div class="space-y-10">
@@ -58,7 +59,7 @@ export const prerender = true;
         ))}
       </div>
     ) : (
-      <p class="text-sm text-ink-soft">Nothing here yet.</p>
+      <p class="text-sm text-ink-soft">{page.emptyText}</p>
     )}
   </section>
 </Layout>
