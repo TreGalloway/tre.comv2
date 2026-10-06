@@ -55,9 +55,8 @@ export const SEO_FALLBACK = {
 
 export const HOME_FALLBACK = {
   hero: {
-    eyebrow: 'Available for selective work',
-    heading:
-      'Electrical Engineering student (Computer Engineering concentration), self-hoster',
+    eyebrow: 'Open For Work',
+    heading: 'Tre Galloway\nEE Student + Developer + Freelancer',
     subheading:
       'Electrical Engineering student focused on embedded systems, computer architecture, homelab/self-hosting, and automation.',
     primaryCta: { label: 'View the work', href: '/work' },
