@@ -234,27 +234,48 @@ export default config({
       path: 'src/content/singletons/home/',
       format: { data: 'yaml' },
       schema: {
-        hero: fields.object({
-          eyebrow: fields.text({ label: 'Eyebrow' }),
-          heading: fields.text({ label: 'Heading', multiline: true }),
-          subheading: fields.text({ label: 'Subheading', multiline: true }),
-          primaryCta: ctaFields(),
-          secondaryCta: ctaFields(),
-        }),
-        postsSection: fields.object({
-          eyebrow: fields.text({ label: 'Eyebrow' }),
-          heading: fields.text({ label: 'Heading' }),
-          ctaLabel: fields.text({ label: 'CTA label' }),
-          ctaHref: fields.text({ label: 'CTA href' }),
-          emptyText: fields.text({ label: 'Empty state text' }),
-        }),
-        workSection: fields.object({
-          eyebrow: fields.text({ label: 'Eyebrow' }),
-          heading: fields.text({ label: 'Heading' }),
-          ctaLabel: fields.text({ label: 'CTA label' }),
-          ctaHref: fields.text({ label: 'CTA href' }),
-          emptyText: fields.text({ label: 'Empty state text' }),
-        }),
+        hero: fields.object(
+          {
+            eyebrow: fields.text({ label: 'Eyebrow' }),
+            heading: fields.text({ label: 'Heading', multiline: true }),
+            subheading: fields.text({ label: 'Subheading', multiline: true }),
+            primaryCta: ctaFields(),
+            secondaryCta: ctaFields(),
+          },
+          {
+            label: 'Hero section',
+            description:
+              'Top of the homepage — eyebrow, title, subheading, and the two CTA buttons. The subheading is also used as the page meta description.',
+          },
+        ),
+        postsSection: fields.object(
+          {
+            eyebrow: fields.text({ label: 'Eyebrow' }),
+            heading: fields.text({ label: 'Heading' }),
+            ctaLabel: fields.text({ label: 'CTA label' }),
+            ctaHref: fields.text({ label: 'CTA href' }),
+            emptyText: fields.text({ label: 'Empty state text' }),
+          },
+          {
+            label: 'Blog posts section',
+            description:
+              'Heading and link for the 3 most recent posts. Empty-state text shows when there are no posts.',
+          },
+        ),
+        workSection: fields.object(
+          {
+            eyebrow: fields.text({ label: 'Eyebrow' }),
+            heading: fields.text({ label: 'Heading' }),
+            ctaLabel: fields.text({ label: 'CTA label' }),
+            ctaHref: fields.text({ label: 'CTA href' }),
+            emptyText: fields.text({ label: 'Empty state text' }),
+          },
+          {
+            label: 'Featured work section',
+            description:
+              'Heading and link for the 3 most recent featured work items. Empty-state text shows when nothing is featured.',
+          },
+        ),
       },
     }),
     about: singleton({
