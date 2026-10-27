@@ -18,8 +18,8 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4
       '@starwind-ui/astro':
-        specifier: 1.2.1
-        version: 1.2.1(astro@7.3.5(@types/node@24.19.0)(idb-keyval@6.3.0)(jiti@2.7.0)(yaml@2.9.1))
+        specifier: ^1.4.0
+        version: 1.4.0(astro@7.3.5(@types/node@24.19.0)(idb-keyval@6.3.0)(jiti@2.7.0)(yaml@2.9.1))
       '@tabler/icons':
         specifier: ^3.48.0
         version: 3.48.0
@@ -50,6 +50,9 @@ importers:
       wrangler:
         specifier: ^4.147.0
         version: 4.147.0(@types/node@24.19.0)
+      yaml:
+        specifier: ^2.9.1
+        version: 2.9.1
     devDependencies:
       typescript:
         specifier: ^5.9.3
@@ -1164,14 +1167,14 @@ packages:
   '@speed-highlight/core@1.2.24':
     resolution: {integrity: sha512-qeW2e1l78afw8VhRPfPQ1Gjj+KU5XFQ/OFV5ti6eTa9bruO7mJyZtA4vw0ofqmA3tKCkROE9xLk3VZoeRc98nw==}
 
-  '@starwind-ui/astro@1.2.1':
-    resolution: {integrity: sha512-mdOIqcQaHhGW72f4XMoVRPEKdgg/nQkjDeWSydXkjBSAluY+LUpfaiW7QHUhVUGkA00xBzabi9Hdvir8aPRF9Q==}
+  '@starwind-ui/astro@1.4.0':
+    resolution: {integrity: sha512-03UI8bN72LGc89V6WugRHBpX9CYn4zlfqXMmK1nOn1XDs70wUwfqlk1tfV1j7acKpmUPr4yQt3OrYEPRYtnp0Q==}
     engines: {node: '>=22.12.0'}
     peerDependencies:
       astro: '>=5'
 
-  '@starwind-ui/runtime@1.2.1':
-    resolution: {integrity: sha512-nYFQ19EiI+t9Bkha4uKy73EGKV/KDiQxJS8obwIdX+N2aYG88mgcNGIiJ88szQi5NqQMPH0JfyvLGplihvpEew==}
+  '@starwind-ui/runtime@1.4.0':
+    resolution: {integrity: sha512-qL53gXrhJUF2y4cuVNHoE9fH/7DHIEj6vObS2sU+t7SpFDJ3nBNs1Xlx8RlqpZV5Qlkqn9fLGWCnINsiyhFPcg==}
     engines: {node: '>=22.12.0'}
 
   '@tabler/icons@3.48.0':
@@ -3332,12 +3335,12 @@ snapshots:
 
   '@speed-highlight/core@1.2.24': {}
 
-  '@starwind-ui/astro@1.2.1(astro@7.3.5(@types/node@24.19.0)(idb-keyval@6.3.0)(jiti@2.7.0)(yaml@2.9.1))':
+  '@starwind-ui/astro@1.4.0(astro@7.3.5(@types/node@24.19.0)(idb-keyval@6.3.0)(jiti@2.7.0)(yaml@2.9.1))':
     dependencies:
-      '@starwind-ui/runtime': 1.2.1
+      '@starwind-ui/runtime': 1.4.0
       astro: 7.3.5(@types/node@24.19.0)(idb-keyval@6.3.0)(jiti@2.7.0)(yaml@2.9.1)
 
-  '@starwind-ui/runtime@1.2.1':
+  '@starwind-ui/runtime@1.4.0':
     dependencies:
       '@floating-ui/dom': 1.8.0
       embla-carousel: 8.6.0

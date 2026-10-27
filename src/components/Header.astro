@@ -1,7 +1,6 @@
 ---
 import { SITE } from '@/site.config';
 import ThemeToggle from './ThemeToggle.astro';
-import ThemeSwitcher from './ThemeSwitcher.astro';
 
 const nav = SITE.nav.filter((link) => link.visible);
 ---
@@ -26,7 +25,18 @@ const nav = SITE.nav.filter((link) => link.visible);
       ))}
     </nav>
     <div class="flex items-center gap-2">
-      <ThemeSwitcher />
+      <button
+        type="button"
+        id="command-palette-trigger"
+        class="flex items-center gap-2 rounded-lg border border-line bg-surface/50 px-3 py-1.5 text-xs text-ink-soft transition-colors hover:text-ink"
+        aria-label="Open command palette"
+      >
+        <span>Search</span>
+        <span class="flex items-center gap-1">
+          <kbd class="rounded border border-line bg-surface px-1.5 py-0.5 font-mono text-[10px]">⌘</kbd>
+          <kbd class="rounded border border-line bg-surface px-1.5 py-0.5 font-mono text-[10px]">K</kbd>
+        </span>
+      </button>
       <ThemeToggle />
     </div>
   </div>

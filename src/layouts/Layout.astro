@@ -2,6 +2,7 @@
 import BaseHead from '@/components/BaseHead.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import CommandPalette from '@/components/CommandPalette.astro';
 import { SITE } from '@/site.config';
 import { SEO } from '@/seo.config';
 
@@ -23,7 +24,7 @@ const canonical = new URL(
 ).href;
 ---
 
-<html lang="en" data-theme="serendipity">
+<html lang="en" data-theme="onedarkpro">
   <head>
     <BaseHead
       title={seo?.metaTitle || title}
@@ -40,5 +41,6 @@ const canonical = new URL(
       <slot />
     </main>
     <Footer />
+    <CommandPalette />
   </body>
 </html>

@@ -1,0 +1,80 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import {
+  Card,
+  CardAction,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/starwind/card';
+import { Button } from '@/components/starwind/button';
+import { Badge } from '@/components/starwind/badge';
+
+const products = await getCollection('products', ({ data }) => !data.draft);
+products.sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
+export const prerender = true;
+---
+
+<Layout title="Products" description="Micro-SaaS products I build and ship.">
+  <section class="mx-auto max-w-5xl px-6 py-20">
+    <div class="mb-10 max-w-2xl">
+      <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
+        SaaS storefront
+      </p>
+      <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        My Products
+      </h1>
+      <p class="mt-4 text-lg text-ink-soft">
+        Small, focused micro-SaaS tools built to solve a single problem well.
+      </p>
+    </div>
+    {products.length > 0 ? (
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {products.map((product) => (
+          <Card class="relative w-full">
+            {product.data.image && (
+              <Image
+                src={product.data.image}
+                alt={product.data.title}
+                class="aspect-video w-full object-cover"
+              />
+            )}
+            <CardHeader>
+              {product.data.featured && (
+                <CardAction>
+                  <Badge size="sm" variant="primary">Featured</Badge>
+                </CardAction>
+              )}
+              <CardTitle>{product.data.title}</CardTitle>
+              <CardDescription>{product.data.valueProp}</CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <div class="flex w-full flex-col gap-2 sm:flex-row">
+                {product.data.demoUrl && (
+                  <Button as="a" href={product.data.demoUrl} class="w-full">
+                    View Live Demo
+                  </Button>
+                )}
+                {product.data.appUrl && (
+                  <Button
+                    as="a"
+                    href={product.data.appUrl}
+                    variant="outline"
+                    class="w-full"
+                  >
+                    Try the App
+                  </Button>
+                )}
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    ) : (
+      <p class="text-sm text-ink-soft">No products yet.</p>
+    )}
+  </section>
+</Layout>

@@ -1,0 +1,99 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Button from '@/components/Button.astro';
+import TechStack from '@/components/TechStack.astro';
+import { getCollection } from 'astro:content';
+
+const email = 'mailto:tre@tregalloway.com';
+const resume = '/resume.pdf';
+
+const works = await getCollection('work', ({ data }) => !data.draft);
+const caseStudies = works
+  .filter((w) => w.data.problem || w.data.stack || w.data.impact)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+export const prerender = true;
+---
+
+<Layout title="Hire Me" description="Resume, tech stack, and case studies.">
+  <section class="mx-auto max-w-5xl px-6 py-20">
+    <div class="mb-12 max-w-2xl">
+      <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
+        For recruiters &amp; clients
+      </p>
+      <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        Hire Me
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+        I build embedded systems, scale micro-SaaS products, and help businesses
+        solve hard technical problems.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <Button href={resume}>Download Resume (PDF)</Button>
+        <Button href={email} variant="ghost">Email Me</Button>
+      </div>
+    </div>
+
+    <section class="mb-14">
+      <h2 class="mb-6 text-xl font-semibold tracking-tight text-ink">Tech Stack</h2>
+      <TechStack>
+        {'{'}
+          <span class="text-[#61afef]">  "languages"</span>
+          <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"TypeScript"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Python"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"C"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"C++"</span><span class="text-[#abb2bf]">],</span>
+          <span class="text-[#61afef]">  "frameworks"</span>
+          <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"Astro"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"React"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Tailwind"</span><span class="text-[#abb2bf]">],</span>
+          <span class="text-[#61afef]">  "platforms"</span>
+          <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"Docker"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Linux"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Cloudflare"</span><span class="text-[#abb2bf]">],</span>
+          <span class="text-[#61afef]">  "hardware"</span>
+          <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"STM32"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"ESP32"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Raspberry Pi"</span><span class="text-[#abb2bf]">]</span>
+        {'}'}
+      </TechStack>
+    </section>
+
+    <section>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight text-ink">Case Studies</h2>
+      {caseStudies.length > 0 ? (
+        <div class="space-y-6">
+          {caseStudies.map((work) => (
+            <article class="rounded-xl border border-line bg-surface/40 p-6">
+              <div class="mb-4 flex items-center justify-between gap-4">
+                <h3 class="text-lg font-semibold text-ink">{work.data.title}</h3>
+                <span class="shrink-0 text-xs uppercase tracking-widest text-ink-soft">
+                  {work.data.role}
+                </span>
+              </div>
+              <div class="space-y-4 text-sm leading-relaxed">
+                {work.data.problem && (
+                  <div>
+                    <p class="mb-1 font-semibold text-ink">The Problem</p>
+                    <p class="text-ink-soft">{work.data.problem}</p>
+                  </div>
+                )}
+                {work.data.stack && (
+                  <div>
+                    <p class="mb-1 font-semibold text-ink">The Stack Used</p>
+                    <p class="text-ink-soft">{work.data.stack}</p>
+                  </div>
+                )}
+                {work.data.impact && (
+                  <div>
+                    <p class="mb-1 font-semibold text-ink">The Business Impact</p>
+                    <p class="text-ink-soft">{work.data.impact}</p>
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-ink-soft">Case studies coming soon.</p>
+      )}
+    </section>
+
+    <section class="mt-16 border-t border-line pt-8">
+      <div class="flex flex-wrap gap-3">
+        <Button href={resume}>Download Resume (PDF)</Button>
+        <Button href={email} variant="ghost">Email Me</Button>
+      </div>
+    </section>
+  </section>
+</Layout>

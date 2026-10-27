@@ -1,38 +1,50 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import PostCard from '@/components/PostCard.astro';
-import WorkCard from '@/components/WorkCard.astro';
 import Button from '@/components/Button.astro';
-import { getCollection, getEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
+import { SITE } from '@/site.config';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/starwind/card';
+import { Button as SwButton } from '@/components/starwind/button';
 
 const entry = await getEntry('pages', 'home');
 if (!entry || entry.data.kind !== 'home') {
   throw new Error('Missing pages/home.mdx');
 }
 const home = entry.data;
-
-const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const recentPosts = allPosts
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
-
-const allWork = await getCollection('work', ({ data }) => !data.draft);
-const featuredWork = allWork
-  .filter((p) => p.data.featured)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
 export const prerender = true;
 ---
 
 <Layout title="Home" description={home.hero.subheading}>
-  <section class="mx-auto max-w-5xl px-6 pt-24 pb-20 sm:pt-32">
+  <section class="mx-auto max-w-5xl px-6 pt-24 pb-16 sm:pt-32">
     <div class="max-w-2xl">
       <p class="mb-4 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
         {home.hero.eyebrow}
       </p>
-      <h1 class="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-        {home.hero.heading}
-      </h1>
+      <div class="flex items-center gap-5">
+        {SITE.avatar ? (
+          <img
+            src={SITE.avatar}
+            alt={SITE.name}
+            class="h-16 w-16 shrink-0 rounded-full border border-line object-cover"
+          />
+        ) : (
+          <div
+            class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-accent text-xl font-semibold text-paper"
+            aria-hidden="true"
+          >
+            TG
+          </div>
+        )}
+        <h1 class="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          {home.hero.heading}
+        </h1>
+      </div>
       <p class="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
         {home.hero.subheading}
       </p>
@@ -48,52 +60,28 @@ export const prerender = true;
   </section>
 
   <section class="mx-auto max-w-5xl px-6 pb-20">
-    <div class="mb-8 flex items-end justify-between">
-      <div>
-        <p class="mb-2 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
-          {home.postsSection.eyebrow}
-        </p>
-        <h2 class="text-2xl font-semibold tracking-tight text-ink">
-          {home.postsSection.heading}
-        </h2>
-      </div>
-      <Button href={home.postsSection.ctaHref} variant="ghost">
-        {home.postsSection.ctaLabel}
-      </Button>
+    <div class="mb-8">
+      <p class="mb-2 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
+        {home.pillars.eyebrow}
+      </p>
+      <h2 class="text-2xl font-semibold tracking-tight text-ink">
+        {home.pillars.heading}
+      </h2>
     </div>
-    {recentPosts.length > 0 ? (
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {recentPosts.map((post) => (
-          <PostCard post={post} />
-        ))}
-      </div>
-    ) : (
-      <p class="text-sm text-ink-soft">{home.postsSection.emptyText}</p>
-    )}
-  </section>
-
-  <section class="mx-auto max-w-5xl px-6 pb-24">
-    <div class="mb-8 flex items-end justify-between">
-      <div>
-        <p class="mb-2 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
-          {home.workSection.eyebrow}
-        </p>
-        <h2 class="text-2xl font-semibold tracking-tight text-ink">
-          {home.workSection.heading}
-        </h2>
-      </div>
-      <Button href={home.workSection.ctaHref} variant="ghost">
-        {home.workSection.ctaLabel}
-      </Button>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {home.pillars.items.map((pillar) => (
+        <Card class="relative w-full">
+          <CardHeader>
+            <CardTitle>{pillar.title}</CardTitle>
+            <CardDescription>{pillar.description}</CardDescription>
+          </CardHeader>
+          <CardFooter>
+            <SwButton as="a" href={pillar.href} class="w-full">
+              {pillar.ctaLabel}
+            </SwButton>
+          </CardFooter>
+        </Card>
+      ))}
     </div>
-    {featuredWork.length > 0 ? (
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredWork.map((work) => (
-          <WorkCard work={work} />
-        ))}
-      </div>
-    ) : (
-      <p class="text-sm text-ink-soft">{home.workSection.emptyText}</p>
-    )}
   </section>
 </Layout>

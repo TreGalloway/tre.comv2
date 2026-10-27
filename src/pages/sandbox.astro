@@ -1,0 +1,39 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Button from '@/components/Button.astro';
+---
+
+<Layout title="The Sandbox" description="Creative experiments and things I enjoy.">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <div class="mb-10">
+      <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
+        Creative experiments
+      </p>
+      <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        The Sandbox
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+        A space for experiments, demos, and the things I tinker with outside of
+        client work.
+      </p>
+    </div>
+
+    <div class="space-y-8">
+      <section>
+        <h2 class="mb-4 text-lg font-semibold text-ink">Experiments</h2>
+        <div class="rounded-xl border border-dashed border-line bg-surface/40 p-8 text-center text-sm text-ink-soft">
+          <p>Experiments coming soon.</p>
+        </div>
+      </section>
+
+      <section class="rounded-xl border border-line bg-surface/40 p-6">
+        <h2 class="mb-2 text-lg font-semibold text-ink">Things I enjoy</h2>
+        <p class="mb-4 text-sm text-ink-soft">
+          Manga, comics, anime, books, games, and movies — the stuff I geek out
+          about in my downtime.
+        </p>
+        <Button href="/favorites" variant="ghost">Browse favorites</Button>
+      </section>
+    </div>
+  </section>
+</Layout>

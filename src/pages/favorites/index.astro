@@ -1,6 +1,16 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import { Image } from 'astro:assets';
 import { getCollection, getEntry, render } from 'astro:content';
+import { Button } from '@/components/starwind/button';
+import { Badge } from '@/components/starwind/badge';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/starwind/card';
 
 const entry = await getEntry('pages', 'favorites-index');
 if (!entry || entry.data.kind !== 'index') {
@@ -19,7 +29,7 @@ export const prerender = true;
 ---
 
 <Layout title="Things I Enjoy" description={page.intro}>
-  <section class="mx-auto max-w-3xl px-6 py-20">
+  <section class="mx-auto max-w-5xl px-6 py-20">
     <div class="mb-10">
       <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
         {page.eyebrow}
@@ -30,34 +40,61 @@ export const prerender = true;
       <p class="mt-4 text-lg text-ink-soft">{page.intro}</p>
     </div>
     {favorites.length > 0 ? (
-      <div class="space-y-10">
+      <div class="space-y-12">
         {favorites.map(({ entry, Content }) => (
           <section>
-            <h2 class="mb-4 text-lg font-semibold text-ink">{entry.data.title}</h2>
-            <div class="prose prose-neutral mb-4 max-w-none dark:prose-invert">
+            <h2 class="mb-6 text-lg font-semibold text-ink">{entry.data.title}</h2>
+            <div class="prose prose-neutral mb-6 max-w-none dark:prose-invert">
               <Content />
             </div>
-            <ul class="space-y-3">
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {entry.data.items.map((item) => (
-                <li class="rounded-lg border border-line bg-surface/40 p-4">
-                  {item.url ? (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="font-medium text-ink hover:underline"
-                    >
-                      {item.name}
-                    </a>
-                  ) : (
-                    <h3 class="font-medium text-ink">{item.name}</h3>
+                <Card class="relative w-full">
+                  {item.image && (
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      class="aspect-video w-full object-cover"
+                    />
                   )}
-                  {item.description && (
-                    <p class="mt-1 text-sm text-ink-soft">{item.description}</p>
+                  {item.imageUrl && (
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      class="aspect-[2/3] w-full object-cover"
+                      loading="lazy"
+                    />
                   )}
-                </li>
+                  <CardHeader>
+                    <div class="flex flex-wrap items-center justify-start gap-2 justify-self-start">
+                      {item.group && (
+                        <Badge size="sm" tone="primary-accent">{item.group}</Badge>
+                      )}
+                      {item.status && (
+                        <Badge size="sm" tone="secondary">{item.status}</Badge>
+                      )}
+                      {item.featured && (
+                        <Badge size="sm" variant="primary">Favorite</Badge>
+                      )}
+                    </div>
+                    <CardTitle>{item.name}</CardTitle>
+                    {item.author && (
+                      <p class="text-sm text-muted-foreground">{item.author}</p>
+                    )}
+                    {item.thoughts && (
+                      <CardDescription>{item.thoughts}</CardDescription>
+                    )}
+                  </CardHeader>
+                  {item.url && (
+                    <CardFooter>
+                      <Button as="a" href={item.url} class="w-full">
+                        {item.linkLabel ?? 'View on Google Books'}
+                      </Button>
+                    </CardFooter>
+                  )}
+                </Card>
               ))}
-            </ul>
+            </div>
           </section>
         ))}
       </div>

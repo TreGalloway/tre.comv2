@@ -39,6 +39,9 @@ const work = defineCollection({
       codeLabel: z.string().default('View code'),
       featured: z.boolean().default(false),
       draft: z.boolean().default(false),
+      problem: z.string().optional(),
+      stack: z.string().optional(),
+      impact: z.string().optional(),
       seo: z
         .object({
           metaTitle: z.string().nullish(),
@@ -46,6 +49,21 @@ const work = defineCollection({
           ogImage: z.string().nullish(),
         })
         .nullish(),
+    }),
+});
+
+const products = defineCollection({
+  loader: glob({ base: './src/content/products', pattern: '**/*.mdx' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      tagline: z.string(),
+      valueProp: z.string(),
+      image: image().optional(),
+      demoUrl: z.url().optional(),
+      appUrl: z.url().optional(),
+      featured: z.boolean().default(false),
+      draft: z.boolean().default(false),
     }),
 });
 
@@ -65,31 +83,33 @@ const uses = defineCollection({
 
 const favorites = defineCollection({
   loader: glob({ base: './src/content/favorites', pattern: '**/*.mdx' }),
-  schema: z.object({
-    title: z.string(),
-    category: z.string(),
-    items: z.array(
-      z.object({
-        name: z.string(),
-        description: z.string().optional(),
-        url: z.string().optional(),
-        featured: z.boolean().default(false),
-      }),
-    ),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      category: z.string(),
+      items: z.array(
+        z.object({
+          name: z.string(),
+          description: z.string().optional(),
+          thoughts: z.string().optional(),
+          url: z.string().optional(),
+          linkLabel: z.string().optional(),
+          tmdbId: z.number().optional(),
+          searchQuery: z.string().optional(),
+          featured: z.boolean().default(false),
+          image: image().optional(),
+          imageUrl: z.string().optional(),
+          author: z.string().optional(),
+          group: z.string().optional(),
+          status: z.string().optional(),
+        }),
+      ),
+    }),
 });
 
 const cta = z.object({
   label: z.string(),
   href: z.string(),
-});
-
-const section = z.object({
-  eyebrow: z.string(),
-  heading: z.string(),
-  ctaLabel: z.string(),
-  ctaHref: z.string(),
-  emptyText: z.string(),
 });
 
 const pages = defineCollection({
@@ -104,8 +124,18 @@ const pages = defineCollection({
         primaryCta: cta,
         secondaryCta: cta,
       }),
-      postsSection: section,
-      workSection: section,
+      pillars: z.object({
+        eyebrow: z.string(),
+        heading: z.string(),
+        items: z.array(
+          z.object({
+            title: z.string(),
+            description: z.string(),
+            href: z.string(),
+            ctaLabel: z.string(),
+          }),
+        ),
+      }),
     }),
     z.object({
       kind: z.literal('about'),
@@ -156,4 +186,4 @@ const pages = defineCollection({
   ]),
 });
 
-export const collections = { blog, work, uses, favorites, pages };
+export const collections = { blog, work, products, uses, favorites, pages };

@@ -1,5 +1,6 @@
 ---
 import '@/styles/global.css';
+import '@/styles/starwind.css';
 
 interface Props {
   title: string;
@@ -40,16 +41,24 @@ const fullTitle = titleTemplate.includes('%s')
 <meta name="generator" content={Astro.generator} />
 
 <script is:inline>
-  const themeFamily = localStorage.getItem('theme-family') || 'serendipity';
-  const themeMode = localStorage.getItem('theme') || 'light';
+  const themeFamily = localStorage.getItem('theme-family') || 'onedarkpro';
+  const themeMode =
+    localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light');
   document.documentElement.setAttribute('data-theme', themeFamily);
   document.documentElement.classList.toggle('dark', themeMode === 'dark');
 </script>
 
 <script>
   document.addEventListener('astro:after-swap', () => {
-    const themeFamily = localStorage.getItem('theme-family') || 'serendipity';
-    const themeMode = localStorage.getItem('theme') || 'light';
+    const themeFamily = localStorage.getItem('theme-family') || 'onedarkpro';
+    const themeMode =
+      localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light');
     document.documentElement.setAttribute('data-theme', themeFamily);
     document.documentElement.classList.toggle('dark', themeMode === 'dark');
   });

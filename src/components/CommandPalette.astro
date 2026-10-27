@@ -1,0 +1,168 @@
+---
+import { Kbd } from '@/components/starwind/kbd';
+---
+
+<div
+  id="command-palette"
+  class="fixed inset-0 z-50 hidden items-start justify-center bg-black/70 p-4 pt-[15vh]"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Command palette"
+>
+  <div
+    class="w-full max-w-md overflow-hidden rounded-xl border border-line bg-surface shadow-2xl"
+  >
+    <div class="flex items-center gap-2 border-b border-line px-4 py-3">
+      <input
+        id="command-palette-input"
+        type="text"
+        placeholder="Type a command or search..."
+        class="w-full bg-transparent text-sm text-ink placeholder:text-ink-soft focus:outline-none"
+        autocomplete="off"
+      />
+      <Kbd>ESC</Kbd>
+    </div>
+    <ul id="command-palette-list" class="max-h-80 overflow-y-auto p-2">
+      <li>
+        <a
+          href="/products"
+          data-palette-href="/products"
+          class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-ink hover:bg-surface/70 data-[active=true]:bg-surface/70"
+        >
+          <span class="font-medium">Products</span>
+          <span class="text-xs text-ink-soft">SaaS storefront</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="/hire-me"
+          data-palette-href="/hire-me"
+          class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-ink hover:bg-surface/70 data-[active=true]:bg-surface/70"
+        >
+          <span class="font-medium">Hire Me</span>
+          <span class="text-xs text-ink-soft">Resume & case studies</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="/sandbox"
+          data-palette-href="/sandbox"
+          class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-ink hover:bg-surface/70 data-[active=true]:bg-surface/70"
+        >
+          <span class="font-medium">The Sandbox</span>
+          <span class="text-xs text-ink-soft">Creative experiments</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="mailto:tre@tregalloway.com"
+          data-palette-href="mailto:tre@tregalloway.com"
+          class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-ink hover:bg-surface/70 data-[active=true]:bg-surface/70"
+        >
+          <span class="font-medium">Contact</span>
+          <span class="text-xs text-ink-soft">Send an email</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const palette = document.getElementById('command-palette');
+  const input = document.getElementById('command-palette-input') as HTMLInputElement;
+  const trigger = document.getElementById('command-palette-trigger');
+  const links = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('[data-palette-href]'),
+  );
+
+  function setOpen(open: boolean) {
+    if (!palette) return;
+    palette.classList.toggle('hidden', !open);
+    palette.classList.toggle('flex', open);
+    if (open) {
+      input?.focus();
+      input && (input.value = '');
+      filter('');
+    } else {
+      input?.blur();
+    }
+  }
+
+  function filter(query: string) {
+    const q = query.trim().toLowerCase();
+    links.forEach((link) => {
+      const text = link.textContent?.toLowerCase() ?? '';
+      const match = !q || text.includes(q);
+      (link.parentElement as HTMLElement).style.display = match ? '' : 'none';
+    });
+  }
+
+  function setActive(index: number) {
+    links.forEach((link, i) => {
+      link.setAttribute('data-active', String(i === index));
+    });
+  }
+
+  let activeIndex = 0;
+  setActive(activeIndex);
+
+  document.addEventListener('keydown', (e) => {
+    if (!palette) return;
+    const isOpen = !palette.classList.contains('hidden');
+
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      setOpen(!isOpen);
+      return;
+    }
+
+    if (!isOpen) return;
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setOpen(false);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const visible = links.filter(
+        (l) => (l.parentElement as HTMLElement).style.display !== 'none',
+      );
+      activeIndex = (activeIndex + 1) % Math.max(visible.length, 1);
+      setActive(activeIndex);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const visible = links.filter(
+        (l) => (l.parentElement as HTMLElement).style.display !== 'none',
+      );
+      activeIndex =
+        (activeIndex - 1 + Math.max(visible.length, 1)) %
+        Math.max(visible.length, 1);
+      setActive(activeIndex);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const visible = links.filter(
+        (l) => (l.parentElement as HTMLElement).style.display !== 'none',
+      );
+      const target = visible[activeIndex];
+      if (target) {
+        const href = target.getAttribute('data-palette-href');
+        if (href?.startsWith('mailto:')) {
+          window.location.href = href;
+        } else if (href) {
+          window.location.href = href;
+        }
+      }
+    }
+  });
+
+  input?.addEventListener('input', () => {
+    filter(input.value);
+    activeIndex = 0;
+    setActive(0);
+  });
+
+  trigger?.addEventListener('click', () => setOpen(true));
+
+  document.addEventListener('astro:after-swap', () => {
+    setOpen(false);
+  });
+</script>

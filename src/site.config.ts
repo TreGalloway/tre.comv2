@@ -1,6 +1,7 @@
 export const SITE = {
   name: "Tre' Galloway",
   logo: null as string | null,
+  avatar: null as string | null,
   tagline:
     'Electrical Engineering student (Computer Engineering concentration), self-hoster',
   description:
@@ -16,7 +17,9 @@ export const SITE = {
   },
   nav: [
     { label: 'Home', href: '/', visible: true },
-    { label: 'About', href: '/about', visible: true },
+    { label: 'Products', href: '/products', visible: true },
+    { label: 'Hire Me', href: '/hire-me', visible: true },
+    { label: 'Sandbox', href: '/sandbox', visible: true },
     { label: 'Blog', href: '/blog', visible: true },
     { label: 'Work', href: '/work', visible: true },
     { label: 'Uses', href: '/uses', visible: true },
