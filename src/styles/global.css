@@ -4,7 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* One Light */
-:root {
+html:root {
   color-scheme: light;
   --paper: #fafafa;
   --ink: #383a42;
@@ -16,7 +16,7 @@
 }
 
 /* One Dark */
-:root.dark {
+html:root.dark {
   color-scheme: dark;
   --paper: #282c34;
   --ink: #abb2bf;

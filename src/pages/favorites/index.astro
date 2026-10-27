@@ -3,7 +3,6 @@ import Layout from '@/layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import { getCollection, getEntry, render } from 'astro:content';
 import { Button } from '@/components/starwind/button';
-import { Badge } from '@/components/starwind/badge';
 import {
   Card,
   CardDescription,
@@ -68,13 +67,19 @@ export const prerender = true;
                   <CardHeader>
                     <div class="flex flex-wrap items-center justify-start gap-2 justify-self-start">
                       {item.group && (
-                        <Badge size="sm" tone="primary-accent">{item.group}</Badge>
+                        <span class="rounded-full border border-line bg-surface px-2.5 py-0.5 text-xs font-medium text-ink">
+                          {item.group}
+                        </span>
                       )}
                       {item.status && (
-                        <Badge size="sm" tone="secondary">{item.status}</Badge>
+                        <span class="rounded-full border border-line px-2.5 py-0.5 text-xs text-ink">
+                          {item.status}
+                        </span>
                       )}
                       {item.featured && (
-                        <Badge size="sm" variant="primary">Favorite</Badge>
+                        <span class="rounded-full bg-warning px-2.5 py-0.5 text-xs font-medium text-warning-foreground">
+                          Favorite
+                        </span>
                       )}
                     </div>
                     <CardTitle>{item.name}</CardTitle>
