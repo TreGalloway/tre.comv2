@@ -56,12 +56,12 @@ Site chrome comes from `src/site.config.ts` (`SITE`, with `SiteContent = typeof 
 
 ## Theming
 
-Two independent, persisted controls on `<html>`:
-- `[data-theme]` = theme family (`serendipity` default | `kanagawa`), persisted as `localStorage['theme-family']`.
-- `.dark` class = light/dark mode, persisted as `localStorage['theme']` (`'light'|'dark'`).
+One palette pair, no theme families. Light mode is **One Light** and dark mode is **One Dark**.
 
-- Controls: `src/components/ThemeToggle.astro` (mode), `src/components/ThemeSwitcher.astro` (family). Pre-paint in `src/components/BaseHead.astro` applies both (also on `astro:after-swap`).
-- Theme colors: semantic tokens (`--paper`, `--ink`, `--ink-soft`, `--line`, `--surface`, `--accent`, `--accent-soft`) defined per family-light/dark in `src/styles/global.css`. Components use token classes only.
+- `.dark` class on `<html>` is the only switch, persisted as `localStorage['theme']` (`'light'|'dark'`), falling back to `prefers-color-scheme`.
+- Control: `src/components/ThemeToggle.astro`. Pre-paint in `src/components/BaseHead.astro` applies the class (also on `astro:after-swap`).
+- Theme colors: semantic tokens (`--paper`, `--ink`, `--ink-soft`, `--line`, `--surface`, `--accent`, `--accent-soft`) defined once for `:root` (One Light) and `:root.dark` (One Dark) in `src/styles/global.css`. Components use token classes only.
+- `src/styles/starwind.css` holds the matching Starwind tokens; the two files must stay in sync.
 
 ## UI
 

@@ -41,25 +41,21 @@ const fullTitle = titleTemplate.includes('%s')
 <meta name="generator" content={Astro.generator} />
 
 <script is:inline>
-  const themeFamily = localStorage.getItem('theme-family') || 'onedarkpro';
   const themeMode =
     localStorage.getItem('theme') ||
     (window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light');
-  document.documentElement.setAttribute('data-theme', themeFamily);
   document.documentElement.classList.toggle('dark', themeMode === 'dark');
 </script>
 
 <script>
   document.addEventListener('astro:after-swap', () => {
-    const themeFamily = localStorage.getItem('theme-family') || 'onedarkpro';
     const themeMode =
       localStorage.getItem('theme') ||
       (window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'dark'
         : 'light');
-    document.documentElement.setAttribute('data-theme', themeFamily);
     document.documentElement.classList.toggle('dark', themeMode === 'dark');
   });
 </script>
