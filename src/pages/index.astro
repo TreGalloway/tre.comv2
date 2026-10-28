@@ -21,7 +21,7 @@ export const prerender = true;
 ---
 
 <Layout title="Home" description={home.hero.subheading}>
-  <section class="mx-auto max-w-5xl px-6 pt-24 pb-16 sm:pt-32">
+  <section class="mx-auto max-w-5xl px-6 pt-8 pb-16 sm:pt-12">
     <div class="max-w-2xl">
       <p class="mb-4 text-[11px] font-medium uppercase tracking-widest text-ink-soft">
         {home.hero.eyebrow}
@@ -45,16 +45,18 @@ export const prerender = true;
           {home.hero.heading}
         </h1>
       </div>
-      <p class="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
         {home.hero.subheading}
       </p>
       <div class="mt-8 flex items-center gap-4">
         <Button href={home.hero.primaryCta.href}>
           {home.hero.primaryCta.label}
         </Button>
-        <Button href={home.hero.secondaryCta.href} variant="ghost">
-          {home.hero.secondaryCta.label}
-        </Button>
+        {home.hero.secondaryCta && (
+          <Button href={home.hero.secondaryCta.href} variant="ghost">
+            {home.hero.secondaryCta.label}
+          </Button>
+        )}
       </div>
     </div>
   </section>

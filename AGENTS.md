@@ -42,7 +42,7 @@ Content lives in `src/content/` and schemas are defined in `src/content.config.t
 - `work/` — title, summary (max 160), role, date, tags, cover, url, repo, liveLabel, codeLabel, featured, draft, seo.
 - `uses/` — title, category, items[] (name, description).
 - `favorites/` — title, category, items[] (name, description, url, featured).
-- `pages/` — page copy singletons (`home`, `about`, `contact`, `not-found`, and the four `*-index` files). Frontmatter is a discriminated union on `kind` (`home` | `about` | `contact` | `not-found` | `index`); read with `getEntry('pages', '<id>')` and narrow on `entry.data.kind`.
+- `pages/` — page copy singletons (`home`, `about`, `contact`, `not-found`, and the three `*-index` files). Frontmatter is a discriminated union on `kind` (`home` | `about` | `contact` | `not-found` | `index`); read with `getEntry('pages', '<id>')` and narrow on `entry.data.kind`.
 
 Dynamic routes: `src/pages/blog/[...slug].astro`, `src/pages/work/[id].astro`.
 

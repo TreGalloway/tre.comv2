@@ -5,102 +5,103 @@
 
 /* One Light */
 html:root {
-  color-scheme: light;
-  --paper: #fafafa;
-  --ink: #383a42;
-  --ink-soft: #a0a1a7;
-  --line: #bebebe;
-  --surface: #f2f2f2;
-  --accent: #4078f2;
-  --accent-soft: #a626a4;
+    color-scheme: light;
+    --paper: #fafafa;
+    --ink: #383a42;
+    --ink-soft: #a0a1a7;
+    --line: #bebebe;
+    --surface: #f2f2f2;
+    --accent: #4078f2;
+    --accent-soft: #a626a4;
+    --link: #50a14f;
 }
 
 /* One Dark */
 html:root.dark {
-  color-scheme: dark;
-  --paper: #282c34;
-  --ink: #abb2bf;
-  --ink-soft: #5c6370;
-  --line: #3e4451;
-  --surface: #2c313a;
-  --accent: #61afef;
-  --accent-soft: #c678dd;
+    color-scheme: dark;
+    --paper: #282c34;
+    --ink: #c8ccd4;
+    --ink-soft: #abb2bf;
+    --line: #3e4451;
+    --surface: #2c313a;
+    --accent: #61afef;
+    --accent-soft: #c678dd;
+    --link: #98c379;
 }
 
 @theme inline {
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji";
-  --font-mono: "SF Mono", SFMono-Regular, ui-monospace, "DejaVu Sans Mono",
-    Menlo, Consolas, monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji";
+    --font-mono: "SF Mono", SFMono-Regular, ui-monospace, "DejaVu Sans Mono",
+        Menlo, Consolas, monospace;
 
-  --color-paper: var(--paper);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-line: var(--line);
-  --color-surface: var(--surface);
-  --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
+    --color-paper: var(--paper);
+    --color-ink: var(--ink);
+    --color-ink-soft: var(--ink-soft);
+    --color-line: var(--line);
+    --color-surface: var(--surface);
+    --color-accent: var(--accent);
+    --color-accent-soft: var(--accent-soft);
+    --color-link: var(--link);
 }
 
 @layer base {
-  * {
-    border-color: var(--color-line);
-  }
+    * {
+        border-color: var(--color-line);
+    }
 
-  body {
-    background-color: var(--color-paper);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+    body {
+        background-color: var(--color-paper);
+        color: var(--color-ink);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-  ::selection {
-    background-color: var(--color-ink);
-    color: var(--color-paper);
-  }
+    ::selection {
+        background-color: var(--color-ink);
+        color: var(--color-paper);
+    }
 
-  :focus-visible {
-    outline: 2px solid var(--color-ink);
-    outline-offset: 2px;
-  }
+    :focus-visible {
+        outline: 2px solid var(--color-ink);
+        outline-offset: 2px;
+    }
 }
 
 .prose {
-  --tw-prose-body: var(--color-ink-soft);
-  --tw-prose-headings: var(--color-ink);
-  --tw-prose-bold: var(--color-ink);
-  --tw-prose-links: var(--color-ink);
-  --tw-prose-bullets: var(--color-ink-soft);
-  --tw-prose-hr: var(--color-line);
-  --tw-prose-quotes: var(--color-ink);
-  --tw-prose-quote-borders: var(--color-line);
-  --tw-prose-code: var(--color-ink);
-  --tw-prose-lead: var(--color-ink-soft);
+    --tw-prose-body: var(--color-ink-soft);
+    --tw-prose-headings: var(--color-ink);
+    --tw-prose-bold: var(--color-ink);
+    --tw-prose-links: var(--color-link);
+    --tw-prose-bullets: var(--color-ink-soft);
+    --tw-prose-hr: var(--color-line);
+    --tw-prose-quotes: var(--color-ink);
+    --tw-prose-quote-borders: var(--color-line);
+    --tw-prose-code: var(--color-ink);
+    --tw-prose-lead: var(--color-ink-soft);
 }
 
 .prose :where(h1, h2, h3, h4) {
-  font-weight: 600;
-  letter-spacing: -0.025em;
+    font-weight: 600;
+    letter-spacing: -0.025em;
 }
 
 .prose :where(a) {
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
 }
 
 [data-sw-card] {
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 [data-sw-card]:hover {
-  transform: translateY(-0.25rem);
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent),
-    0 12px 32px -12px color-mix(in srgb, var(--accent-soft) 45%, transparent);
+    transform: translateY(-0.25rem);
+    box-shadow:
+        0 0 0 1px var(--accent),
+        0 12px 32px -12px color-mix(in srgb, var(--accent) 45%, transparent);
 }

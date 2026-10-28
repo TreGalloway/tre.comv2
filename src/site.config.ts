@@ -1,6 +1,8 @@
 export const SITE = {
   name: "Tre' Galloway",
   logo: null as string | null,
+  // Profile picture: put your YouTube avatar in public/ (e.g. public/avatar.jpg)
+  // then set this to '/avatar.jpg'
   avatar: null as string | null,
   tagline:
     'Electrical Engineering student (Computer Engineering concentration), self-hoster',
@@ -17,11 +19,10 @@ export const SITE = {
   },
   nav: [
     { label: 'Home', href: '/', visible: true },
-    { label: 'Products', href: '/products', visible: true },
-    { label: 'Hire Me', href: '/hire-me', visible: true },
+    { label: 'Products', href: '/products', visible: false },
+    { label: 'Work', href: '/work', visible: true },
     { label: 'Sandbox', href: '/sandbox', visible: true },
     { label: 'Blog', href: '/blog', visible: true },
-    { label: 'Work', href: '/work', visible: true },
     { label: 'Uses', href: '/uses', visible: true },
     { label: 'Things I Enjoy', href: '/favorites', visible: true },
     { label: 'Contact', href: '/contact', visible: true },

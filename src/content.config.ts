@@ -122,7 +122,7 @@ const pages = defineCollection({
         heading: z.string(),
         subheading: z.string(),
         primaryCta: cta,
-        secondaryCta: cta,
+        secondaryCta: cta.optional(),
       }),
       pillars: z.object({
         eyebrow: z.string(),

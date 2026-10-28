@@ -7,7 +7,7 @@ const nav = SITE.nav.filter((link) => link.visible);
 
 <header class="border-b border-line bg-paper/80 backdrop-blur">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href="/" class="text-sm font-medium tracking-tight text-ink">
+    <a href="/" class="text-base font-medium tracking-tight text-ink transition-colors hover:text-accent">
       {SITE.logo ? (
         <img src={SITE.logo} alt={SITE.name} class="h-6 w-auto" />
       ) : (
@@ -18,7 +18,7 @@ const nav = SITE.nav.filter((link) => link.visible);
       {nav.map((link) => (
         <a
           href={link.href}
-          class="text-sm text-ink-soft transition-colors hover:text-ink"
+          class="text-base text-ink-soft transition-colors hover:text-accent"
         >
           {link.label}
         </a>
@@ -28,7 +28,7 @@ const nav = SITE.nav.filter((link) => link.visible);
       <button
         type="button"
         id="command-palette-trigger"
-        class="flex items-center gap-2 rounded-lg border border-line bg-surface/50 px-3 py-1.5 text-xs text-ink-soft transition-colors hover:text-ink"
+        class="flex items-center gap-2 rounded-lg border border-line bg-surface/50 px-3 py-1.5 text-sm text-ink-soft transition-colors hover:text-accent"
         aria-label="Open command palette"
       >
         <span>Search</span>

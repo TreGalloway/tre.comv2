@@ -9,7 +9,7 @@ const { post } = Astro.props;
 const { title, description, pubDate, category } = post.data;
 ---
 
-<article class="group relative flex flex-col gap-3 rounded-xl border border-line bg-surface/40 p-6 transition-colors hover:border-ink/20 hover:bg-surface/60">
+<article class="group relative flex flex-col gap-3 rounded-xl border border-line bg-surface/40 p-6 transition-colors hover:border-accent hover:bg-surface/60">
   <div class="flex items-center justify-between text-xs text-ink-soft">
     <span class="uppercase tracking-widest">{category}</span>
     <time datetime={pubDate.toISOString()}>

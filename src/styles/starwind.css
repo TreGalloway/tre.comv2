@@ -116,9 +116,9 @@
 
 .dark {
   --background: #282c34;
-  --foreground: #abb2bf;
+  --foreground: #c8ccd4;
   --card: #2c313a;
-  --card-foreground: #abb2bf;
+  --card-foreground: #c8ccd4;
   --popover: #2c313a;
   --popover-foreground: #abb2bf;
   --primary: #61afef;
@@ -128,7 +128,7 @@
   --secondary-foreground: #abb2bf;
   --secondary-accent: #abb2bf;
   --muted: #2c313a;
-  --muted-foreground: #5c6370;
+  --muted-foreground: #abb2bf;
   --accent: #3e4451;
   --accent-foreground: #abb2bf;
   --info: #98c379;
