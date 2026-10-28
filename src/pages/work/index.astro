@@ -5,7 +5,7 @@ import TechStack from '@/components/TechStack.astro';
 import { getCollection } from 'astro:content';
 
 const email = 'mailto:tre@tregalloway.com';
-const resume = '/resume.pdf';
+const resume = '/work/resume.pdf';
 
 const works = await getCollection('work', ({ data }) => !data.draft);
 const caseStudies = works
@@ -14,21 +14,18 @@ const caseStudies = works
 export const prerender = true;
 ---
 
-<Layout title="Work" description="Work, tech stack, and case studies.">
+<Layout title="Hire Me" description="Resume, tech stack, and case studies.">
   <section class="mx-auto max-w-5xl px-6 py-20">
     <div class="mb-12 max-w-2xl">
       <p class="mb-4 text-[11px] uppercase tracking-widest text-ink-soft">
-        Career
+        For recruiters &amp; clients
       </p>
       <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-        Work
+        Hire Me
       </h1>
       <p class="mt-4 text-lg leading-relaxed text-ink-soft">
-        My path into tech isn't traditional. I started out self-taught, learning
-        how to build software and diving into low-level systems on my own time.
-        Now, I'm taking that practical foundation into a formal Electrical
-        Engineering degree to deeply understand the hardware side. I'm building a
-        future in Embedded Systems and AI.
+        I build embedded systems, scale micro-SaaS products, and help businesses
+        solve hard technical problems.
       </p>
       <div class="mt-6 flex flex-wrap gap-3">
         <Button href={resume}>Download Resume (PDF)</Button>
@@ -41,19 +38,19 @@ export const prerender = true;
       <TechStack>
         {'{'}
           <span class="text-[#61afef]">  "languages"</span>
-          <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"TypeScript"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Python"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"C"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"C++"</span><span class="text-[#abb2bf]">],</span>
+          <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"TypeScript"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Python"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Rust"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Golang"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"C++"</span><span class="text-[#abb2bf]">],</span>
           <span class="text-[#61afef]">  "frameworks"</span>
           <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"Astro"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"React"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Tailwind"</span><span class="text-[#abb2bf]">],</span>
           <span class="text-[#61afef]">  "platforms"</span>
           <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"Docker"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Linux"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Cloudflare"</span><span class="text-[#abb2bf]">],</span>
           <span class="text-[#61afef]">  "hardware"</span>
-          <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"STM32"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"ESP32"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Raspberry Pi"</span><span class="text-[#abb2bf]">]</span>
+          <span class="text-[#abb2bf]">:</span> <span class="text-[#abb2bf]">[</span><span class="text-[#98c379]">"STM32"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"ESP32"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Home Server"</span><span class="text-[#abb2bf]">,</span> <span class="text-[#98c379]">"Raspberry Pi"</span><span class="text-[#abb2bf]">]</span>
         {'}'}
       </TechStack>
     </section>
 
     <section>
-      <h2 class="mb-6 text-xl font-semibold tracking-tight text-ink">Case Studies</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight text-ink">Projects</h2>
       {caseStudies.length > 0 ? (
         <div class="space-y-6">
           {caseStudies.map((work) => (
